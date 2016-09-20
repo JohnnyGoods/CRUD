@@ -179,7 +179,7 @@ class CrudController extends BaseController
         $this->crud->hasAccessOrFail('delete');
 
         $ret = $this->crud->delete($id);
-        $this->onItemDeleted($id)
+        $this->onItemDeleted($id);
         return $ret;
     }
 
