@@ -137,7 +137,7 @@ class CrudController extends BaseController
         }
 
         // update the row in the db
-        $this->crud->update($request->get($this->crud->model->getKeyName()),
+        $item = $this->crud->update($request->get($this->crud->model->getKeyName()),
                             $request->except('redirect_after_save'));
         $this->onItemUpdated($item, $request);
 
@@ -178,7 +178,9 @@ class CrudController extends BaseController
     {
         $this->crud->hasAccessOrFail('delete');
 
-        return $this->crud->delete($id);
+        $ret = $this->crud->delete($id);
+        $this->onItemDeleted($id)
+        return $ret;
     }
 
     /**
@@ -301,6 +303,14 @@ class CrudController extends BaseController
      * Subclass handling of newly updated item
      */
     protected function onItemUpdated($item, $request)
+    {
+        // NOOP
+    }
+
+    /**
+     * Subclass handling of newly deleted item
+     */
+    protected function onItemDeleted($id)
     {
         // NOOP
     }
